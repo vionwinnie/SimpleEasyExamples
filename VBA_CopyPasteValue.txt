@@ -1,0 +1,15 @@
+Sub Copy_Past()
+
+    'Copy Paste Values
+    ActiveWorkbook.ActiveSheet.Cells.Copy
+    ActiveWorkbook.ActiveSheet.Cells(1, 1).PasteSpecial Paste:=xlPasteValues
+    
+    'To replace empty NA cells
+    ActiveWorkbook.ActiveSheet.Cells.Replace "#N/A N/A", "", xlWhole
+    ActiveWorkbook.ActiveSheet.Cells.Replace "#VALUE!", "", xlWhole
+    
+    ActiveWorkbook.Save
+    ActiveWorkbook.ActiveSheet.Cells(1, 1).Select
+    MsgBox "Done"
+    
+End Sub
