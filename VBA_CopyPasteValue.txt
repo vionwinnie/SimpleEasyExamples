@@ -1,4 +1,6 @@
-Sub Copy_Past()
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+
+Sub Copy_Past2()
 
     'Copy Paste Values
     ActiveWorkbook.ActiveSheet.Cells.Copy
@@ -10,6 +12,37 @@ Sub Copy_Past()
     
     ActiveWorkbook.Save
     ActiveWorkbook.ActiveSheet.Cells(1, 1).Select
-    MsgBox "Done"
     
 End Sub
+
+Sub OpenRunReport2()
+    ' Always declare variables!
+    Dim MyPath As String
+    Dim neew As Workbook
+    Dim vbFILEOPEN As String
+    Dim wbkReport As Workbook
+    Dim i As Integer
+
+    MyPath = ThisWorkbook.Path
+    Workbooks("file_paths.xlsx").Activate
+    
+    Application.ScreenUpdating = False
+    
+    On Error Resume Next
+    For i = 1 To 50
+        
+        vbFILEOPEN = Workbooks("file_paths.xlsx").Worksheets("file_paths").Cells(i, 2).Value
+        Set wbkReport = Workbooks.Open(Filename:=vbFILEOPEN)
+        wbkReport.Worksheets("Price").Range("ZZ1") = vbFILEOPEN
+        Sleep (8000)
+        Call Copy_Past2
+        wbkReport.Close
+        ThisWorkbook.Activate
+        
+    Next i
+        
+    Application.ScreenUpdating = True
+    
+End Sub
+
+
